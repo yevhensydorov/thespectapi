@@ -1,0 +1,44 @@
+service: sls
+
+custom:
+  settings:
+    THE_SPECTATOR_EVENTS_TABLE: the_spectator_events
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  environment: ${self:custom.settings}
+  region: eu-west-2
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.THE_SPECTATOR_EVENTS_TABLE}"
+functions:
+  createEvent:
+    handler: handler.createEvent
+    events:
+      - http:
+          path: /event
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    EventsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.settings.THE_SPECTATOR_EVENTS_TABLE}
