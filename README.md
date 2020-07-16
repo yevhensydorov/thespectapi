@@ -8,17 +8,17 @@ There were a few steps to create this API <br />
 
 I've created new IAM user, gave it the right permissions and got credentials <br />
 
-In the project root directory install serverless globally
+I've installed serverless globally in the project's root directory
 `npm install serverless -g`
 
-Generate serverless aws-nodejs boilerplate
+Generated serverless aws-nodejs boilerplate
 `serverless create -t aws-nodejs`
 
 There are two main files: `serverless.yml` and `handler.js`
 
 ### serverless.yml
 
-Serverless.yml file has settings, functions and resources paragraphs where we can save instructions. There I've created two lambda functions which will cover `Add a resource to database` and `Get all resources from database` routes.
+Serverless.yml file has settings, functions and resources properties where we can save instructions. I've created two lambda functions there. They will cover `Add a resource to database` and `Get all resources from database` routes.
 
 ### handler.js
 
