@@ -26,6 +26,13 @@ functions:
           path: /event
           method: post
           cors: true
+  getAllEvents:
+    handler: handler.getAllEvents
+    events:
+      - http:
+          path: /events
+          method: get
+          cors: true
 
 resources:
   Resources:

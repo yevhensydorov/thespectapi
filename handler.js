@@ -47,3 +47,15 @@ module.exports.createEvent = (event, context, callback) => {
     })
     .catch((err) => response(null, response(err.statusCode, err)));
 };
+
+module.exports.getAllEvents = (event, context, callback) => {
+  return db
+    .scan({
+      TableName: eventsTable,
+    })
+    .promise()
+    .then((res) => {
+      callback(null, response(200, res.Items.sort(sortByDate)));
+    })
+    .catch((err) => response(null, response(err.statusCode, err)));
+};
